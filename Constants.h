@@ -17,7 +17,9 @@ const int WALKING_ANIMATION_FRAMES = 4;
 
 //Set the velocity
 const int MAX_FALLING_VEL = 10;
-const int JUMPING_VEL = 20;
+const int MIN_JUMP_VEL = 5;
+const int MAX_JUMP_VEL = 25;
+const int MAX_JUMP_TIME = 30;
 const int GRAVITY = 1;
 
 enum status
@@ -31,8 +33,7 @@ enum status
 
 enum tileType
 {
-    AIR_BLOCK,
-    DIRT_BLOCK
+    AIR_BLOCK
 };
 
 #endif // CONSTANTS_H_

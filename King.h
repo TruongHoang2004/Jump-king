@@ -3,6 +3,7 @@
 #include "LTexture.h"
 #include "Constants.h"
 #include "Tiles.h"
+#include "Utils.h"
 
 class King
 {
@@ -24,6 +25,8 @@ public:
     //Get dot dimensions of the king
     SDL_Rect getBox();
 
+    void drawJumpForce();
+
 private:
     //Current frame
     SDL_Rect currentFrame;
@@ -40,5 +43,8 @@ private:
     //King status
     status kingStatus;
     bool facing;
+
+    //Jumping
+    int jump_time;
 };
 #endif // KING_H_

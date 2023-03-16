@@ -8,7 +8,7 @@ King::King()
     //Initialize of the offsets
     currentFrame = gWalkingSpriteClip[ 0 ];
     mBox.x = 0;
-    mBox.y = 6400 - 26;
+    mBox.y = LEVEL_HEIGHT - 26;
     mBox.w = currentFrame.w;
     mBox.h = currentFrame.h;
 
@@ -21,6 +21,8 @@ King::King()
 
     //Set facing direction
     facing = false;
+
+    jump_time = 0;
 }
 
 void King::handleEvent( SDL_Event &e )
@@ -31,14 +33,6 @@ void King::handleEvent( SDL_Event &e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-        case SDLK_SPACE:
-            if ( kingStatus != FALLING && kingStatus != JUMPING )
-            {
-                mVelY -= JUMPING_VEL;
-                kingStatus = JUMPING;
-            }
-            break;
-
         case SDLK_LEFT:
             mVelX -= KING_VEL;
             facing = true;
@@ -72,6 +66,23 @@ void King::handleEvent( SDL_Event &e )
     {
         switch ( e.key.keysym.sym )
         {
+        case SDLK_SPACE:
+            kingStatus = JUMPING;
+            mVelY -= MIN_JUMP_VEL + ( MAX_JUMP_VEL - MIN_JUMP_VEL ) * jump_time / MAX_JUMP_TIME;
+            jump_time = 0;
+            if ( kingStatus == JUMPING )
+            {
+                if ( facing )
+                    mVelX = -1 * KING_VEL;
+                else
+                    mVelX = KING_VEL;
+            }
+            else
+            {
+                mVelX = 0;
+            }
+            break;
+
         case SDLK_LEFT:
             mVelX += KING_VEL;
             if ( kingStatus == WALKING )
@@ -87,6 +98,23 @@ void King::handleEvent( SDL_Event &e )
                 kingStatus = IDLE;
             }
             break;
+        }
+    }
+    else if ( e.type == SDL_KEYDOWN && e.key.repeat != 0 )
+    {
+        if ( e.key.keysym.sym == SDLK_SPACE )
+        {
+            if ( kingStatus != JUMPING && kingStatus != FALLING )
+            {
+                if ( jump_time < MAX_JUMP_TIME )
+                {
+                    jump_time++;
+                }
+                else
+                {
+                    jump_time = MAX_JUMP_TIME;
+                }
+            }
         }
     }
 }
@@ -114,6 +142,7 @@ void King::move( Tile * tiles[] )
         mVelY = 0;
         if ( kingStatus == FALLING || kingStatus == JUMPING )
         {
+            mVelX = 0;
             kingStatus = IDLE;
         }
     }
@@ -160,4 +189,14 @@ void King::render( SDL_Rect& camera )
 SDL_Rect King::getBox()
 {
     return mBox;
+}
+
+void King::drawJumpForce()
+{
+    if ( jump_time != 0 )
+    {
+        SDL_Rect jumpForce = { SCREEN_WIDTH - 100, 0, jump_time * 100 / MAX_JUMP_TIME, 20 };
+        SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
+        SDL_RenderFillRect( gRenderer, &jumpForce );
+    }
 }

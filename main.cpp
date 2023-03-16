@@ -72,6 +72,8 @@ int main( int argc, char* args[] )
                 //Render the king
                 theKing.render( camera );
 
+                theKing.drawJumpForce();
+
                 //Update screen
                 SDL_RenderPresent( gRenderer );
             }

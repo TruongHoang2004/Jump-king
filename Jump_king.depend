@@ -15,17 +15,18 @@
 	<SDL_image.h>
 	<SDL_ttf.h>
 
-1678854103 source:c:\users\xuant\onedrive\documents\dev\jump_king\king.cpp
+1678963801 source:c:\users\xuant\onedrive\documents\dev\jump_king\king.cpp
 	"King.h"
 	"Global.h"
 	"Utils.h"
 
-1678443283 c:\users\xuant\onedrive\documents\dev\jump_king\king.h
+1678958439 c:\users\xuant\onedrive\documents\dev\jump_king\king.h
 	"LTexture.h"
 	"Constants.h"
 	"Tiles.h"
+	"Utils.h"
 
-1678855577 c:\users\xuant\onedrive\documents\dev\jump_king\constants.h
+1678957569 c:\users\xuant\onedrive\documents\dev\jump_king\constants.h
 
 1678348301 source:c:\users\xuant\onedrive\documents\dev\jump_king\ltexture.cpp
 	"LTexture.h"
@@ -37,7 +38,7 @@
 	"LTexture.h"
 	"Tiles.h"
 
-1678526784 source:c:\users\xuant\onedrive\documents\dev\jump_king\main.cpp
+1678958439 source:c:\users\xuant\onedrive\documents\dev\jump_king\main.cpp
 	"LTexture.h"
 	"Constants.h"
 	"Utils.h"
