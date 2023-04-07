@@ -71,7 +71,7 @@ bool loadMedia( Tile* tiles[] )
         success = false;
     }
 
-    if ( !setTiles( tiles ) )
+    if (!setTiles(tiles, "Jump king character/Tileset/game_map.map"))
     {
         std::cout << "Failed to load tile set!" << std::endl;
         success = false;
@@ -79,7 +79,7 @@ bool loadMedia( Tile* tiles[] )
     return success;
 }
 
-bool setTiles( Tile * tiles[] )
+bool setTiles( Tile * tiles[] , std::string path)
 {
     //Success flag
     bool tilesLoaded = true;
@@ -88,7 +88,7 @@ bool setTiles( Tile * tiles[] )
     int x = 0, y = 0;
 
     //Open the file map
-    std::ifstream map( "Jump king character/Tileset/game_map.map");
+    std::ifstream map(path.c_str());
 
     //If the map couldn't be loaded
     if ( map.fail() )

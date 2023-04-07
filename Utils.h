@@ -6,7 +6,7 @@
 
 bool init();
 
-bool loadMedia( Tile* tiles[] );
+bool loadMedia( Tile* tiles[]);
 
 void setSpriteClip();
 
@@ -16,6 +16,6 @@ bool checkCollision( SDL_Rect a, SDL_Rect b );
 
 bool touchesWall( SDL_Rect box, Tile * tiles[] );
 
-bool setTiles( Tile * tiles[] );
+bool setTiles( Tile * tiles[], std::string path );
 
 #endif // UTILS_H_

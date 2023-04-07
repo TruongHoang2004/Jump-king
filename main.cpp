@@ -9,7 +9,7 @@ int main( int argc, char* args[] )
 {
     if ( !init() )
     {
-        std::cout << "Failed to initialize\n" << std::endl;
+        std::cout << "Failed to initialize\n" ;
     }
     else
     {
@@ -47,13 +47,10 @@ int main( int argc, char* args[] )
                     //Handle input for the dot
                     theKing.handleEvent( e );
                 }
-                //Move the king
-                for (int i = 0; i < 7 * 64; ++i )
-                {
-                    gTilesTexture.render( i * 64, 0, &gTileClips[ i ] );
-                }
 
+               //Move the king
                 theKing.move( tileSet );
+                theKing.setStatus();
                 theKing.setCamera( camera );
 
                 //Clear screen
@@ -61,21 +58,22 @@ int main( int argc, char* args[] )
                 SDL_RenderClear( gRenderer );
 
                 //Back ground render
-                gBGTexture.render( 0, 0, &camera );
+                gBGTexture.render(0, 0, &camera);
 
                 //Tiles render
                 for (int i = 0; i < TOTAL_TILES; ++i )
                 {
-                    tileSet[i]->render( camera );
+                    tileSet[i]->render(camera);
                 }
 
                 //Render the king
-                theKing.render( camera );
+                theKing.render(camera);
 
+                //Draw jump force
                 theKing.drawJumpForce();
 
                 //Update screen
-                SDL_RenderPresent( gRenderer );
+                SDL_RenderPresent(gRenderer);
             }
         }
         close( tileSet );

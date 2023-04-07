@@ -26,6 +26,7 @@ public:
     SDL_Rect getBox();
 
     void drawJumpForce();
+    void setStatus();
 
 private:
     //Current frame

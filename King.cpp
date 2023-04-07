@@ -12,6 +12,9 @@ King::King()
     mBox.w = currentFrame.w;
     mBox.h = currentFrame.h;
 
+    //King status set
+    kingStatus = IDLE;
+
     //Initialize the velocity
     mVelX = 0;
     mVelY = 0;
@@ -27,93 +30,68 @@ King::King()
 
 void King::handleEvent( SDL_Event &e )
 {
-    //If a key press down
-    if ( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
+    if (e.key.repeat == 0 && e.type == SDL_KEYDOWN && kingStatus == IDLE)
     {
-        //Adjust the velocity
-        switch( e.key.keysym.sym )
+        switch (e.key.keysym.sym)
         {
         case SDLK_LEFT:
             mVelX -= KING_VEL;
+            kingStatus = WALKING;
             facing = true;
-            if ( kingStatus == IDLE )
-            {
-                kingStatus = WALKING;
-                frame = 0;
-            }
             break;
 
         case SDLK_RIGHT:
             mVelX += KING_VEL;
+            kingStatus = WALKING;
             facing = false;
-            if ( kingStatus == IDLE )
-            {
-                kingStatus = WALKING;
-                frame = 0;
-            }
+            break;
+
+        default:
             break;
         }
-
-        if ( kingStatus == JUMPING )
-        {
-            if ( facing )
-                mVelX = -1 * KING_VEL;
-            else
-                mVelX = KING_VEL;
-        }
+           
     }
-    else if ( e.type == SDL_KEYUP && e.key.repeat == 0 )
-    {
-        switch ( e.key.keysym.sym )
-        {
-        case SDLK_SPACE:
-            kingStatus = JUMPING;
-            mVelY -= MIN_JUMP_VEL + ( MAX_JUMP_VEL - MIN_JUMP_VEL ) * jump_time / MAX_JUMP_TIME;
-            jump_time = 0;
-            if ( kingStatus == JUMPING )
-            {
-                if ( facing )
-                    mVelX = -1 * KING_VEL;
-                else
-                    mVelX = KING_VEL;
-            }
-            else
-            {
-                mVelX = 0;
-            }
-            break;
 
+    if (e.key.repeat == 0 && e.type == SDL_KEYUP && kingStatus == WALKING)
+    {
+        switch (e.key.keysym.sym)
+        {
         case SDLK_LEFT:
             mVelX += KING_VEL;
-            if ( kingStatus == WALKING )
-            {
-                kingStatus = IDLE;
-            }
+            kingStatus = IDLE;
             break;
 
         case SDLK_RIGHT:
             mVelX -= KING_VEL;
-            if ( kingStatus == WALKING )
-            {
-                kingStatus = IDLE;
-            }
+            kingStatus = IDLE;
+            break;
+
+        default:
             break;
         }
     }
-    else if ( e.type == SDL_KEYDOWN && e.key.repeat != 0 )
+    if (e.key.keysym.sym == SDLK_SPACE)
     {
-        if ( e.key.keysym.sym == SDLK_SPACE )
+        if (e.key.repeat != 0 && e.type == SDL_KEYDOWN && kingStatus != FALLING && kingStatus != JUMPING)
         {
-            if ( kingStatus != JUMPING && kingStatus != FALLING )
+            if (jump_time < 100)
             {
-                if ( jump_time < MAX_JUMP_TIME )
-                {
-                    jump_time++;
-                }
-                else
-                {
-                    jump_time = MAX_JUMP_TIME;
-                }
+                jump_time++;
+            }
+        }
+
+        if ((e.key.repeat == 0 && e.type == SDL_KEYUP) || jump_time == MAX_JUMP_TIME)
+        {
+            mVelY -= MIN_JUMP_VEL + (MAX_JUMP_VEL - MIN_JUMP_VEL) * jump_time / MAX_JUMP_TIME;
+            kingStatus = JUMPING;
+            jump_time = 0;
+            if (facing == true)
+            {
+                mVelX -= KING_VEL;
+            }
+            else
+            {
+                mVelX += KING_VEL;
             }
         }
     }
@@ -129,6 +107,11 @@ void King::move( Tile * tiles[] )
     {
         //Move back
         mBox.x -= mVelX;
+        if (kingStatus == JUMPING)
+        {
+            mVelX = -1 * mVelX * 2 / 3;
+            kingStatus = FALLING;
+        }
     }
 
     //Jumping and falling
@@ -154,7 +137,7 @@ void King::setCamera( SDL_Rect& camera )
     {
         if ( checkCollision( mBox, gCameraSprite[ i ] ) )
         {
-            camera = gCameraSprite[ i ];
+            camera = gCameraSprite[i];
             return ;
         }
     }
@@ -176,13 +159,13 @@ void King::render( SDL_Rect& camera )
         if ( frame >= 8 * WALKING_ANIMATION_FRAMES )
             frame = 0;
         gWalkingSpriteSheetTexture.render( mBox.x - camera.x, mBox.y - camera.y, &gWalkingSpriteClip[ frame / 8 ], 0, NULL, flip );
-        currentFrame = gWalkingSpriteClip[ frame / 8 ];
+        currentFrame = gWalkingSpriteClip[frame / 8];
         ++frame;
     }
     else
     {
         gWalkingSpriteSheetTexture.render( mBox.x - camera.x, mBox.y - camera.y, &gWalkingSpriteClip[ 0 ], 0, NULL, flip);
-        currentFrame = gWalkingSpriteClip[ 0 ];
+        currentFrame = gWalkingSpriteClip[0];
     }
 }
 
@@ -198,5 +181,13 @@ void King::drawJumpForce()
         SDL_Rect jumpForce = { SCREEN_WIDTH - 100, 0, jump_time * 100 / MAX_JUMP_TIME, 20 };
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
         SDL_RenderFillRect( gRenderer, &jumpForce );
+    }
+}
+
+void King::setStatus()
+{
+    if (mVelY > 0 && kingStatus != JUMPING)
+    {
+        kingStatus = FALLING;
     }
 }
