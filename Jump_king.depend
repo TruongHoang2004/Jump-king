@@ -1,0 +1,75 @@
+# depslib dependency file v1.0
+1680159700 source:c:\users\xuant\onedrive\documents\dev\jump_king\global.cpp
+	"Global.h"
+
+1680159721 c:\users\xuant\onedrive\documents\dev\jump_king\global.h
+	"LTexture.h"
+	"Constants.h"
+
+1679991968 c:\users\xuant\onedrive\documents\dev\jump_king\ltexture.h
+	"game.h"
+
+1679380955 source:c:\users\xuant\onedrive\documents\dev\jump_king\king.cpp
+	"King.h"
+	"Global.h"
+	"Utils.h"
+
+1679992435 c:\users\xuant\onedrive\documents\dev\jump_king\king.h
+	"game.h"
+	"Constants.h"
+	"Tiles.h"
+	"Utils.h"
+
+1679502249 c:\users\xuant\onedrive\documents\dev\jump_king\constants.h
+
+1678348301 source:c:\users\xuant\onedrive\documents\dev\jump_king\ltexture.cpp
+	"LTexture.h"
+	"Global.h"
+	"Constants.h"
+	"Utils.h"
+
+1678383218 c:\users\xuant\onedrive\documents\dev\jump_king\utils.h
+	"LTexture.h"
+	"Tiles.h"
+
+1679993414 source:c:\users\xuant\onedrive\documents\dev\jump_king\main.cpp
+	"Render.h"
+
+1680159802 source:c:\users\xuant\onedrive\documents\dev\jump_king\utils.cpp
+	"Utils.h"
+	"Constants.h"
+	"Global.h"
+
+1678442400 c:\users\xuant\onedrive\documents\dev\jump_king\tiles.h
+	"LTexture.h"
+	"Constants.h"
+
+1678526447 source:c:\users\xuant\onedrive\documents\dev\jump_king\tiles.cpp
+	"Tiles.h"
+	"Global.h"
+	"Utils.h"
+
+1679152372 source:c:\users\xuant\onedrive\documents\dev\jump_king\render.cpp
+	"Render.h"
+
+1679992620 c:\users\xuant\onedrive\documents\dev\jump_king\render.h
+	"game.h"
+	"Constants.h"
+	"Utils.h"
+	"King.h"
+	"Global.h"
+	"Tiles.h"
+
+1679992944 c:\users\xuant\onedrive\documents\dev\jump_king\game.h
+	<iostream>
+	<string>
+	<algorithm>
+	<fstream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+
+1680159597 source:c:\users\xuant\onedrive\documents\dev\jump_king\game.cpp
+	"game.h"
+	"Global.h"
+
