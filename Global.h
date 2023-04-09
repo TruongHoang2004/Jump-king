@@ -4,15 +4,13 @@
 #include "LTexture.h"
 #include "Constants.h"
 
-extern game * Game;
-
 extern SDL_Window * gWindow;
 
 extern SDL_Renderer * gRenderer;
 
 extern TTF_Font *gFont;
 
-extern SDL_Rect gCameraSprite[ LEVEL_HEIGHT / SCREEN_HEIGHT ];
+extern SDL_Rect gCameraSprite[LEVEL_HEIGHT / SCREEN_HEIGHT];
 
 extern LTexture gTilesTexture;
 extern SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];

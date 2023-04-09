@@ -1,7 +1,13 @@
 #ifndef LTexture_H_
 #define LTexture_H_
 
-#include "game.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
 class LTexture
 {

@@ -1,5 +1,5 @@
-#include "tiles.h"
-#include "global.h"
+#include "Tiles.h"
+#include "Global.h"
 #include "UTIL.h"
 
 Tile::Tile( int x, int y, int tileType )

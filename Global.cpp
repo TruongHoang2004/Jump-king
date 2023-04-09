@@ -1,7 +1,5 @@
 #include "Global.h"
 
-game * Game;
-
 SDL_Window * gWindow = NULL;
 
 SDL_Renderer * gRenderer = NULL;

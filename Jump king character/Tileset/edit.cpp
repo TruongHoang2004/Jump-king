@@ -26,7 +26,7 @@ int main()
     {
         for (int j = 0; j < w; ++j )
         {
-            fout << fixed << setw(2) << setfill('0') << arr[i][j] << " ";
+            fout << fixed << setw(2) << setfill('0') << arr[i][j]  << " ";
         }
         fout << endl;
     }

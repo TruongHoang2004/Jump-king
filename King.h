@@ -1,15 +1,15 @@
 #ifndef KING_H_
 #define KING_H_
-#include "game.h"
+#include "LTexture.h"
 #include "Constants.h"
 #include "Tiles.h"
-#include "Utils.h"
+#include "UTIL.h"
 
 class King
 {
 public:
     //Maximum axits the velocity of the king
-    static const int KING_VEL = 5;
+    static const int KING_VEL = 3;
 
     //Initializes the variable
     King();
@@ -26,6 +26,7 @@ public:
     SDL_Rect getBox();
 
     void drawJumpForce();
+    void setStatus();
 
 private:
     //Current frame

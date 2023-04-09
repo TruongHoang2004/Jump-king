@@ -2,7 +2,7 @@
 #define TILES_H_
 
 #include "LTexture.h"
-#include "constant.h"
+#include "Constants.h"
 
 class Tile
 {
