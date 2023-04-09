@@ -55,7 +55,7 @@ void render()
     SDL_RenderClear(gRenderer);
 
     //Back ground render
-    gBGTexture.render(0, 0, &camera);
+    gBGTexture.render(0, 0);
 
     //Tiles render
     for (int i = 0; i < TOTAL_TILES; ++i)
@@ -112,5 +112,6 @@ int main( int argc, char* args[] )
         }
         close( tileSet );
     }
+    system("PAUSE");
     return 0;
 }

@@ -71,6 +71,12 @@ bool loadMedia( Tile* tiles[] )
         success = false;
     }
 
+    if (!gBGTexture.loadFromFile("Jump king character/BackGround.jpg"))
+    {
+        std::cout << "Failed to load back ground texture\n";
+        success = false;
+    }
+
     if (!setTiles(tiles, "Jump king character/Tileset/game_map.map"))
     {
         std::cout << "Failed to load tile set!" << std::endl;
