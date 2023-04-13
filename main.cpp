@@ -5,15 +5,16 @@
 #include "Global.h"
 #include "Tiles.h"
 #include "timer.h"
+#include "game.h"
 
-//Main loop flag
+//Main loop flag   
 bool quit = false;
 
 //Event handler
 SDL_Event e;
 
 //The king
-King theKing;
+King Author;
 
 //Camera rect
 SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
@@ -23,55 +24,6 @@ Tile* tileSet[ TOTAL_TILES ];
 
 //Cap timer
 LTimer capTimer;
-
-
-void handleEvent();
-void caculate();
-void render();
-
-void handleEvent()
-{
-    if (e.type == SDL_QUIT)
-    {
-        quit = true;
-    }
-
-    //Handle input for the dot
-    theKing.handleEvent(e);
-}
-
-void caculate()
-{
-    //Move the king
-    theKing.move(tileSet);
-    theKing.setStatus();
-    theKing.setCamera(camera);
-}
-
-void render()
-{
-    //Clear screen
-    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderClear(gRenderer);
-
-    //Back ground render
-    gBGTexture.render(0, 0);
-
-    //Tiles render
-    for (int i = 0; i < TOTAL_TILES; ++i)
-    {
-        tileSet[i]->render(camera);
-    }
-
-    //Render the king
-    theKing.render(camera);
-
-    //Draw jump force
-    theKing.drawJumpForce();
-
-    //Update screen
-    SDL_RenderPresent(gRenderer);
-}
 
 int main( int argc, char* args[] )
 {
@@ -97,10 +49,14 @@ int main( int argc, char* args[] )
 
                 while( SDL_PollEvent( &e ) != 0 )
                 {
-                    handleEvent();
+                    if (e.type == SDL_QUIT)
+                    {
+                        quit = true;
+                    }
+                    gameHandleEvent(&Author, e);
                 }
-                caculate();
-                render();
+                gameCaculate(&Author, camera, tileSet);
+                gameRender(&Author,tileSet, camera);
 
                 int frameTicks = capTimer.getTicks();
                 if (frameTicks < SCREEN_TICKS_PER_FRAME)
@@ -112,6 +68,5 @@ int main( int argc, char* args[] )
         }
         close( tileSet );
     }
-    system("PAUSE");
-    return 0;
+        return 0;
 }

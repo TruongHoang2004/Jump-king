@@ -36,6 +36,7 @@ enum status
     WALKING,
     JUMPING,
     FALLING,
+    FORCING,
 };
 
 

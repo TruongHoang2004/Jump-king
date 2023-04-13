@@ -18,6 +18,9 @@ extern SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
 extern LTexture gWalkingSpriteSheetTexture;
 extern SDL_Rect gWalkingSpriteClip[ WALKING_ANIMATION_FRAMES ];
 
+extern LTexture gJumpingTexture;
+extern LTexture gForcingTexture;
+extern LTexture gFallingTexture;
 
 extern LTexture gBGTexture;
 #endif // GLOBAL_H_

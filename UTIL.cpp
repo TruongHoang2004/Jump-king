@@ -53,7 +53,7 @@ bool init()
 bool loadMedia( Tile* tiles[] )
 {
     bool success = true;
-    if ( !gWalkingSpriteSheetTexture.loadFromFile( "Jump king character/PC_Computer_-_Jump_King_-_The_Knight___New_Babe-removebg-preview.png" ) )
+    if ( !gWalkingSpriteSheetTexture.loadFromFile( "Jump king character/Walking.png" ) )
     {
         std::cout << "Unable to load Walking sprite sheet\n";
         success = false;
@@ -74,6 +74,24 @@ bool loadMedia( Tile* tiles[] )
     if (!gBGTexture.loadFromFile("Jump king character/BackGround.jpg"))
     {
         std::cout << "Failed to load back ground texture\n";
+        success = false;
+    }
+
+    if (!gJumpingTexture.loadFromFile("Jump king character/Jumping.png"))
+    {
+        std::cout << "Failed to load jumping texture\n";
+        success = false;
+    }
+
+    if (!gForcingTexture.loadFromFile("Jump king character/Forcing.png"))
+    {
+        std::cout << "Failed to load forcing texture\n";
+        success = false;
+    }
+
+    if (!gFallingTexture.loadFromFile("Jump king character/Falling.png"))
+    {
+        std::cout << "Failed to load falling texture\n";
         success = false;
     }
 
@@ -166,10 +184,10 @@ bool setTiles( Tile * tiles[] , std::string path)
 
 void setSpriteClip()
 {
-    gWalkingSpriteClip[0] = { 0, 0, 24, 26};
-    gWalkingSpriteClip[1] = {24, 0, 31, 26};
-    gWalkingSpriteClip[2] = {55, 0, 25, 26};
-    gWalkingSpriteClip[3] = {80, 0, 30, 26};
+    gWalkingSpriteClip[0] = { 0, 0, 24, 32};
+    gWalkingSpriteClip[1] = {24, 0, 31, 32};
+    gWalkingSpriteClip[2] = {55, 0, 25, 32};
+    gWalkingSpriteClip[3] = {80, 0, 30, 32};
 
     for ( int i = 0; i < LEVEL_HEIGHT / SCREEN_HEIGHT; ++i )
     {

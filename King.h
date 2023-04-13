@@ -1,6 +1,5 @@
 #ifndef KING_H_
 #define KING_H_
-#include "LTexture.h"
 #include "Constants.h"
 #include "Tiles.h"
 #include "UTIL.h"

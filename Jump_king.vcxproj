@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="LTexture.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="LTexture.h" />

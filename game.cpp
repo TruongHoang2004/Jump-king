@@ -1,68 +1,39 @@
 #include "game.h"
-#include "Global.h"
 
-game::game()
+void gameHandleEvent(King* theKing, SDL_Event& e )
 {
-    gWindow = NULL;
+	//Handle input for the king
+	theKing->handleEvent(e);
 }
 
-bool game::init( std::string title, int width, int height )
+void gameCaculate(King* theKing, SDL_Rect& camera, Tile* tileset[])
 {
-    bool success = true;
-    if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        std::cout << "Failed to initializes sdl \n";
-        success = false;
-    }
-    else
-    {
-        gWindow = SDL_CreateWindow( title.c_str() , SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_ALLOW_HIGHDPI );
-        if ( gWindow == NULL )
-        {
-            std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
-            success = false;
-        }
-        else
-        {
-            gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-            if ( gRenderer == NULL )
-            {
-                std::cout << "Renderer could not be create! SDL Error: " << SDL_GetError() << std::endl;
-                success = false;
-            }
-            else
-            {
-                //Initialize renderer color
-                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-
-                int imgFlags = IMG_INIT_PNG;
-                if ( !(IMG_Init( imgFlags ) & imgFlags ) )
-                {
-                    std::cout << "SDL image could not initialize! SDL_image Error: " << IMG_GetError() << std::endl;
-                    success = false;
-                }
-
-                //Initialize SDL_ttf
-                if ( TTF_Init() == -1 )
-                {
-                    std::cout << "SDL_ttf could not initialize! SDL_ttf Error" << TTF_GetError() << std::endl;
-                    success = false;
-                }
-            }
-        }
-    }
-    return success;
+	//Move the king
+	theKing->move(tileset);
+	theKing->setStatus();
+	theKing->setCamera(camera);
 }
 
-void game::clean()
+void gameRender( King* theKing, Tile* tileset[], SDL_Rect &camera)
 {
-    SDL_DestroyWindow( gWindow );
-    gWindow = NULL;
+	//Clear screen
+	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(gRenderer);
+
+	//Back ground render
+	gBGTexture.render(0, 0);
+
+	//Tiles render
+	for (int i = 0; i < TOTAL_TILES; ++i)
+	{
+		tileset[i]->render(camera);
+	}
+
+	//The king render
+	theKing->render(camera);
+
+	theKing->drawJumpForce();
+
+	//Screen update
+	SDL_RenderPresent(gRenderer);
 }
-
-bool game::isRunning()
-{
-    return running;
-}
-
-

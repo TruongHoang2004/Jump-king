@@ -8,7 +8,7 @@ King::King()
     //Initialize of the offsets
     currentFrame = gWalkingSpriteClip[ 0 ];
     mBox.x = 0;
-    mBox.y = LEVEL_HEIGHT - 26;
+    mBox.y = LEVEL_HEIGHT - 32;
     mBox.w = currentFrame.w;
     mBox.h = currentFrame.h;
 
@@ -74,6 +74,7 @@ void King::handleEvent( SDL_Event &e )
     {
         if (e.key.repeat != 0 && e.type == SDL_KEYDOWN && kingStatus != FALLING && kingStatus != JUMPING)
         {
+            kingStatus = FORCING;
             if (jump_time < 100)
             {
                 jump_time++;
@@ -156,8 +157,6 @@ void King::setCamera( SDL_Rect& camera )
 
 void King::render( SDL_Rect& camera )
 {
-    mBox.w = currentFrame.w;
-    mBox.h = currentFrame.h;
     SDL_RendererFlip flip;
     if ( facing )
         flip = SDL_FLIP_HORIZONTAL;
@@ -166,11 +165,31 @@ void King::render( SDL_Rect& camera )
 
     if ( kingStatus == WALKING )
     {
+        mBox.w = currentFrame.w;
+        mBox.h = currentFrame.h;
         if ( frame >= 8 * WALKING_ANIMATION_FRAMES )
             frame = 0;
         gWalkingSpriteSheetTexture.render( mBox.x - camera.x, mBox.y - camera.y, &gWalkingSpriteClip[ frame / 8 ], 0, NULL, flip );
         currentFrame = gWalkingSpriteClip[frame / 8];
         ++frame;
+    }
+    else if (kingStatus == JUMPING)
+    {
+        mBox.w = gJumpingTexture.getWidth();
+        mBox.h = gJumpingTexture.getHeight();
+        gJumpingTexture.render(mBox.x - camera.x, mBox.y - camera.y, NULL, 0, NULL, flip);
+    }
+    else if (kingStatus == FORCING)
+    {
+        mBox.w = gForcingTexture.getWidth();
+        mBox.h = gForcingTexture.getHeight();
+        gForcingTexture.render(mBox.x - camera.x, mBox.y - camera.y, NULL, 0, NULL, flip);
+    }
+    else if (kingStatus == FALLING)
+    {
+        mBox.w = gFallingTexture.getWidth();
+        mBox.h = gFallingTexture.getHeight();
+        gFallingTexture.render(mBox.x - camera.x, mBox.y - camera.y, NULL, 0, NULL, flip);
     }
     else
     {
@@ -196,7 +215,7 @@ void King::drawJumpForce()
 
 void King::setStatus()
 {
-    if (mVelY > 0 && kingStatus != JUMPING)
+    if (mVelY > 0)
     {
         kingStatus = FALLING;
     }

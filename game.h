@@ -1,30 +1,14 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <fstream>
+#include "LTexture.h"
+#include "Constants.h"
+#include "Global.h"
+#include "Tiles.h"
+#include "King.h"
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+void gameHandleEvent( King * theKing, SDL_Event &e );
+void gameCaculate( King * theKing, SDL_Rect &camera, Tile * tileset[] );
+void gameRender(King* theKing, Tile * tileset[], SDL_Rect &camera);
 
-class game
-{
-public:
-    game();
-    ~game();
-
-    bool init( std::string title, int width, int height );
-    void update();
-    void handleEvents();
-    bool isRunning();
-    void render();
-    void clean();
-private:
-    bool running;
-    SDL_Window * gWindow;
-};
-
-#endif // GAME_H_
+#endif // !GAME_H_
