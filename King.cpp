@@ -75,7 +75,7 @@ void King::handleEvent( SDL_Event &e )
         if (e.key.repeat != 0 && e.type == SDL_KEYDOWN && kingStatus != FALLING && kingStatus != JUMPING)
         {
             kingStatus = FORCING;
-            if (jump_time < 100)
+            if (jump_time < MAX_JUMP_TIME)
             {
                 jump_time++;
             }
@@ -144,6 +144,7 @@ void King::move( Tile * tiles[] )
 
 void King::setCamera( SDL_Rect& camera )
 {
+    //Set the camera allway show the king
     for ( int i = 0; i < LEVEL_HEIGHT / SCREEN_HEIGHT; ++i )
     {
         if ( checkCollision( mBox, gCameraSprite[ i ] ) )

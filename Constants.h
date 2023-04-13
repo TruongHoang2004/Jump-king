@@ -2,7 +2,7 @@
 #define CONSTANTS_H_
 
 const int SCREEN_WIDTH = 512;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_HEIGHT = 640;
 
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
@@ -22,9 +22,9 @@ const int WALKING_ANIMATION_FRAMES = 4;
 
 //Set the velocity
 const int MIN_JUMP_VEL = 5;
+const int MAX_FALLING_VEL = 10;
 const int MAX_JUMP_TIME = 30;
 
-const int MAX_FALLING_VEL = 10;
 const int MAX_JUMP_VEL = 20;
 const int JUMP_VELX = 5;
 
