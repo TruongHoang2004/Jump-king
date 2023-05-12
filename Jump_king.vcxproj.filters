@@ -36,7 +36,13 @@
     <ClCompile Include="timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="LButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jump_king_game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Princess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +68,16 @@
     <ClInclude Include="timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
+    <ClInclude Include="LButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Jump_king\Jump_king_game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Princess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

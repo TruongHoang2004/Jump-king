@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -11,9 +12,9 @@
 
 #include "Tiles.h"
 
-bool init();
+bool init(SDL_Window* window = NULL);
 
-bool loadMedia(Tile* tiles[]);
+bool loadMedia();
 
 void setSpriteClip();
 
@@ -24,5 +25,7 @@ bool checkCollision( SDL_Rect a, SDL_Rect b );
 bool touchesWall( SDL_Rect box, Tile * tiles[] );
 
 bool setTiles( Tile * tiles[], std::string path );
+
+void drawRect(int xPos, int yPos, int width, int height);
 
 #endif // UTILS_H_

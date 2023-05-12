@@ -40,7 +40,7 @@ bool LTexture::loadFromFile( std::string path )
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
         if ( newTexture == NULL )
         {
-            std::cout << "Unable to create texture from " << path << "! SDL Error: " << SDL_GetError();
+            std::cout << "Unable to create texture from " << path << "! SDL Error: " << SDL_GetError() << std::endl;
         }
         else
         {
@@ -63,7 +63,7 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
 	free();
 
 	//Render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
+	SDL_Surface* textSurface = TTF_RenderText_Solid( gMenuFont, textureText.c_str(), textColor );
 	if( textSurface != NULL )
 	{
 		//Create texture from surface pixels

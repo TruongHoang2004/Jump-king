@@ -18,7 +18,7 @@ Tile::Tile( int x, int y, int tileType )
 
 int Tile::getType()
 {
-    return mType;
+    return mType;  
 }
 
 SDL_Rect Tile::getBox()
@@ -36,7 +36,7 @@ void Tile::render( SDL_Rect& camera )
     if ( checkCollision( camera, mBox ) )
     {
         //Show the tile
-        gTilesTexture.render( mBox.x - camera.x, mBox.y - camera.y, &gTileClips[ mType ] );
+        gTilesTexture.render( mBox.x - camera.x , mBox.y - camera.y, &gTileClips[mType]);
     }
 }
 

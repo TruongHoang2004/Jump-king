@@ -7,10 +7,10 @@ King::King()
 {
     //Initialize of the offsets
     currentFrame = gWalkingSpriteClip[ 0 ];
-    mBox.x = 0;
-    mBox.y = LEVEL_HEIGHT - 32;
-    mBox.w = currentFrame.w;
-    mBox.h = currentFrame.h;
+    mBox.x = LEVEL_WIDTH / 2;
+    mBox.y = LEVEL_HEIGHT - 64;
+    mBox.w = 52;
+    mBox.h = 64;
 
     //King status set
     kingStatus = IDLE;
@@ -28,6 +28,13 @@ King::King()
     jump_time = 0;
 }
 
+void King::setPosition(int posX, int posY, int _status)
+{
+    mBox.x = posX;
+    mBox.y = posY;
+    kingStatus = (status) _status;
+}
+
 void King::handleEvent( SDL_Event &e )
 {
     if (e.key.repeat == 0 && e.type == SDL_KEYDOWN && kingStatus == IDLE)
@@ -36,13 +43,11 @@ void King::handleEvent( SDL_Event &e )
         {
         case SDLK_LEFT:
             mVelX -= KING_VEL;
-            kingStatus = WALKING;
             facing = true;
             break;
 
         case SDLK_RIGHT:
             mVelX += KING_VEL;
-            kingStatus = WALKING;
             facing = false;
             break;
 
@@ -52,7 +57,7 @@ void King::handleEvent( SDL_Event &e )
            
     }
 
-    if (e.key.repeat == 0 && e.type == SDL_KEYUP && kingStatus == WALKING)
+    if (e.key.repeat == 0 && e.type == SDL_KEYUP && kingStatus == WALKING )
     {
         switch (e.key.keysym.sym)
         {
@@ -81,10 +86,9 @@ void King::handleEvent( SDL_Event &e )
             }
         }
 
-        if ((e.key.repeat == 0 && e.type == SDL_KEYUP) || jump_time == MAX_JUMP_TIME)
+        if (((e.key.repeat == 0 && e.type == SDL_KEYUP) || jump_time == MAX_JUMP_TIME ) && (kingStatus == FORCING || kingStatus == IDLE))
         {
             mVelY -= MIN_JUMP_VEL + (MAX_JUMP_VEL - MIN_JUMP_VEL) * jump_time / MAX_JUMP_TIME;
-            kingStatus = JUMPING;
             jump_time = 0;
             if (facing == true)
             {
@@ -94,24 +98,27 @@ void King::handleEvent( SDL_Event &e )
             {
                 mVelX += JUMP_VELX;
             }
+            Mix_PlayChannel(-1, gJumpSound, 0);
         }
     }
 }
 
 void King::move( Tile * tiles[] )
 {
-    //Move the dot left or right
+    //Move the king left or right
     mBox.x += mVelX;
 
-    //If the dot went too far to the left or right
-    if ( ( mBox.x < 0 ) || mBox.x + mBox.w > LEVEL_WIDTH || touchesWall( mBox, tiles ) )
+    //If the king went too far to the left or right
+    if (mBox.x < 0 || mBox.x + mBox.w > SCREEN_WIDTH || touchesWall(mBox, tiles))
     {
         //Move back
         mBox.x -= mVelX;
-        if (kingStatus == JUMPING)
+
+        //If king collision with wall
+        if (kingStatus == JUMPING || kingStatus == FALLING)
         {
+            kingStatus = COLLISION;
             mVelX = -1 * mVelX;
-            kingStatus = FALLING;
         }
     }
 
@@ -133,11 +140,6 @@ void King::move( Tile * tiles[] )
         {
             mVelX = 0;
             kingStatus = IDLE;
-        }
-        if (kingStatus == JUMPING && mVelY < 0)
-        {
-            mVelY = 0;
-            kingStatus = FALLING;
         }
     }
 }
@@ -185,12 +187,19 @@ void King::render( SDL_Rect& camera )
         mBox.w = gForcingTexture.getWidth();
         mBox.h = gForcingTexture.getHeight();
         gForcingTexture.render(mBox.x - camera.x, mBox.y - camera.y, NULL, 0, NULL, flip);
+        drawJumpForce();
     }
     else if (kingStatus == FALLING)
     {
         mBox.w = gFallingTexture.getWidth();
         mBox.h = gFallingTexture.getHeight();
         gFallingTexture.render(mBox.x - camera.x, mBox.y - camera.y, NULL, 0, NULL, flip);
+    }
+    else if (kingStatus == COLLISION)
+    {
+        mBox.w = gCollisionTexture.getWidth();
+        mBox.h = gCollisionTexture.getHeight();
+        gCollisionTexture.render(mBox.x - camera.x, mBox.y - camera.y, NULL, 0, NULL, flip);
     }
     else
     {
@@ -204,20 +213,34 @@ SDL_Rect King::getBox()
     return mBox;
 }
 
+status King::getStatus()
+{
+    return kingStatus;
+}
+
 void King::drawJumpForce()
 {
     if ( jump_time != 0 )
     {
-        SDL_Rect jumpForce = { SCREEN_WIDTH - 100, 0, jump_time * 100 / MAX_JUMP_TIME, 20 };
+        SDL_Rect jumpForce = { SCREEN_WIDTH - 100, 0, jump_time * 100 / MAX_JUMP_TIME, 20};
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
         SDL_RenderFillRect( gRenderer, &jumpForce );
     }
-}
+}  
 
 void King::setStatus()
 {
-    if (mVelY > 0)
+    if (mVelX != 0 && mVelY == 0 )
+    {
+        kingStatus = WALKING;
+    }
+
+    if (mVelY > 0 && kingStatus != COLLISION)
     {
         kingStatus = FALLING;
+    }
+    if (mVelY < 0 && kingStatus != COLLISION)
+    {
+        kingStatus = JUMPING;
     }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -112,7 +112,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,21 +132,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
     <ClCompile Include="Global.cpp" />
+    <ClCompile Include="Jump_king_game.cpp" />
     <ClCompile Include="King.cpp" />
+    <ClCompile Include="LButton.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Princess.cpp" />
     <ClCompile Include="Tiles.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="UTIL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Jump_king\Jump_king_game.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="game.h" />
+    <ClInclude Include="gameManager.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="King.h" />
+    <ClInclude Include="LButton.h" />
     <ClInclude Include="LTexture.h" />
+    <ClInclude Include="Princess.h" />
     <ClInclude Include="Tiles.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="UTIL.h" />

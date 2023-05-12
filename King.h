@@ -13,6 +13,8 @@ public:
     //Initializes the variable
     King();
 
+    void setPosition( int posX, int posY, int _status);
+
     void handleEvent( SDL_Event &e );
 
     void setCamera( SDL_Rect &camera );
@@ -23,6 +25,7 @@ public:
 
     //Get dot dimensions of the king
     SDL_Rect getBox();
+    status getStatus();
 
     void drawJumpForce();
     void setStatus();
