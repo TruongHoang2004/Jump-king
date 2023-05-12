@@ -15,3 +15,5 @@ Installation
   1.Download visual studio community 2022 and set for c++ development
   2.Download this .zip file
   3.Running the game :3
+Development
+  TruongHoang2004(https://github.com/TruongHoang2004)
